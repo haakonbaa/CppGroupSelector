@@ -11,8 +11,8 @@ def main():
         for line in file.readlines():
             line = line.strip().split('\t')
             line[0] = int(line[0])
-            del line[1]
-            for i in range(1,len(line)):
+            line[1] = ' '.join(line[2:])
+            for i in range(2,len(line)):
                 first_space = line[i].find(' ')
                 day = line[i][:first_space]
                 kl = line[i][first_space+1:]
