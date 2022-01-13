@@ -19,7 +19,7 @@ def main():
                 start = int(kl[:2])
                 stop = int(kl[8:10])
                 line[i] = tuple([day_num[day],tuple(range(start,stop))])
-            print(tuple(line))
+            print(f'{tuple(line)},')
 
 if __name__ == '__main__':
     main()
