@@ -6,12 +6,14 @@ DAYS = ('mandag','tirsdag','onsdag','torsdag','fredag')
 def main():
     index = 0
     selection = [' -']*NUMHOURS
+    # index = 58
+    # selection = list(range(NUMHOURS))
     while index < NUMHOURS:
         print_calendar(selection)
         print('skriv hvor godt den gitte datoen passer')
         print('på en skala fra 0-3. skriv "p","n" for ')
         print('hennholdsvis forrige og neste.')
-        day, kl = index_to_day(index)
+        day, kl = index_to_daykl(index)
         day = DAYS[day - 1]
         ans = input(f'{day} {kl:02}-{kl+1:02} : ')
         if ans in ('0','1','2','3'):
@@ -22,23 +24,46 @@ def main():
         elif ans == 'n' and index < NUMHOURS - 2 and selection[index+1] != '-':
             index += 1
     print_calendar(selection)
-    print('Calculating...')
-            
+    print('\nResultat:\n')
+
+    scores = []
+    for line in DATA:
+        score = 0
+        group = line[0]
+        daykls = line[1:]
+        for day, hours in daykls:
+            for hour in hours:
+                score += selection[daykl_to_index(day,hour)]
+        scores.append([group,score])
+    scores.sort(key=lambda x: -x[1])
+    print('gruppe | poeng')
+    for group, score in scores:
+        print(f'   {group:2}  :  {str(score).ljust(4)}')
+    print('ferdig :)')
+
 if OS_NAME == 'posix':
     clear = lambda: execute('clear') # clear works, probably
 else:
-    clear = lambda: execute('cls') # Windows, probably
+    clear = lambda: execute('cls') # Windows, probably :)
 
 def print_calendar(selection):
     clear()
     print(calendar.format(*selection))
 
-def index_to_day(i):
+def index_to_daykl(i):
     if i >= 54:
         i += 1
     day = i % 5
     kl = int( (i - day) // 5 )
     return day + 1, kl + 8
+
+def daykl_to_index(day, kl):
+    kl = kl - 8
+    day = day - 1
+    i = 5 * kl + day
+    if i >= 54:
+        i -= 1
+    return i
 
 DATA = (
     (1, (4, (12, 13)), (5, (12, 13, 14, 15))),
