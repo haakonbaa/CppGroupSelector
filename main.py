@@ -41,10 +41,18 @@ def main():
         print(f'   {group:2}  :  {str(score).ljust(4)}')
     print('ferdig :)')
 
-if OS_NAME == 'posix':
-    clear = lambda: execute('clear') # clear works, probably
-else:
-    clear = lambda: execute('cls') # Windows, probably :)
+# ugly hack to check if in Jupyter
+try:
+    from IPython import get_ipython
+    from IPython.display import clear_output
+    if 'IPKernelApp' not in get_ipython().config:  # pragma: no cover
+            raise Exception()
+    clear = clear_output
+except:
+    if OS_NAME == 'posix':
+        clear = lambda: execute('clear') # clear works, probably
+    else:
+        clear = lambda: execute('cls') # Windows, probably :)
 
 def print_calendar(selection):
     clear()
