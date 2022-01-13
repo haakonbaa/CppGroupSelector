@@ -18,8 +18,8 @@ def main():
                 kl = line[i][first_space+1:]
                 start = int(kl[:2])
                 stop = int(kl[8:10])
-                line[i] = [day_num[day],list(range(start,stop))]
-            print(line)
+                line[i] = tuple([day_num[day],tuple(range(start,stop))])
+            print(tuple(line))
 
 if __name__ == '__main__':
     main()
