@@ -21,7 +21,7 @@ def main():
             index += 1
         elif ans == 'p' and index > 0:
             index -= 1
-        elif ans == 'n' and index < NUMHOURS - 2 and selection[index+1] != '-':
+        elif ans == 'n' and index < NUMHOURS - 2 and selection[index] != ' -':
             index += 1
     print_calendar(selection)
     print('\nResultat:\n')
